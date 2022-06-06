@@ -1,74 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
-    <link rel="stylesheet" href="./lib/leaflet-measure.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-    <title>Document</title>
-    <style>
-        #mymap {
-            height: 700px;
-            width: 100%;
-        }
-    </style>
-</head>
 
-<body>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+    />
+
+    <link rel="stylesheet" href="./lib/leaflet-measure.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"
+    />
+
+    <title>Habitus</title>
+    <link rel="stylesheet" href="Control.Coordinates.css" />
+
+    <style>
+      #mymap {
+        height: 98vh;
+        width: 98vw;
+      }
+    </style>
+  
+  </head>
+
+  <body>
     <div id="mymap"></div>
     <div class="coordinate"></div>
-</body>
-
+  </body>
 </html>
+
 <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="./lib/leaflet-measure.js"></script>
 <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<script src="Control.Coordinates.js"></script>
 
 <script>
-    if ('geolocation' in navigator) {
-        console.log('geolocation available');
-        navigator.geolocation.getCurrentPosition(position => {
-            lat = position.coords.latitude;
-            lon = position.coords.longitude;
-            console.log(lat, lon);
+  if ("geolocation" in navigator) {
+    console.log("geolocation available");
+    navigator.geolocation.getCurrentPosition((position) => {
+      lat = position.coords.latitude;
+      lon = position.coords.longitude;
+      console.log(lat, lon);
 
-            const mymap = L.map('mymap',{
-                minZoom: 10,
-                maxZoom: 17
-            }).setView([lat, lon], 17);
-            const attribution =
-                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-            const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            const tiles = L.tileLayer(tileUrl, { attribution });
-            tiles.addTo(mymap);
+      const mymap = L.map("mymap").setView([lat, lon], 17);
+      const attribution =
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+      const tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+      const tiles = L.tileLayer(tileUrl, { attribution });
+      tiles.addTo(mymap);
 
+      //adding here marker of my location
+      var marker = L.marker([lat, lon]).addTo(mymap);
 
-            //adding here marker of my location
-            var marker = L.marker([lat, lon]).addTo(mymap);
+      //pop up for the location
+      marker
+        .bindPopup(
+          `<b>This is users current location</b> latitutde:${lat} longitude:${lon}`
+        )
+        .openPopup();
 
-            //pop up for the location
-            marker.bindPopup(`<b>This is users current location</b> latitutde:${lat.toFixed(5)} longitude:${lon.toFixed(5)}`).openPopup();
+      //add map scale
+      L.control.scale({ position: "bottomright" }).addTo(mymap);
 
-            //add map scale
-            L.control.scale({ position: 'bottomright' }).addTo(mymap);
+      //map coordinate display
+     
 
-            //map coordinate display
-            mymap.on('mousemove', function (e) {
-                console.log(e)
-                $('.coordinate').html(`LAT:${e.latlng.lat.toFixed(5)} LNG:${e.latlng.lng.toFixed(5)}`)
-            })
-
-            //leaflet measure
-            L.control.measure().addTo(mymap);
-            //search buTton
-            L.Control.geocoder().addTo(mymap);
-
-        });
-    } else {
-        console.log('geolocation not available');
-    }
+      //leaflet measure
+      L.control.measure().addTo(mymap);
+      //search buTton
+      L.Control.geocoder().addTo(mymap);
+      //add lat and long
+      var c = new L.Control.Coordinates();
+      c.addTo(mymap);
+      mymap.on('click', function(e) {
+        c.setCoordinates(e);
+      });
+    }); 
+  } else {
+    console.log("geolocation not available");
+  }
 </script>
