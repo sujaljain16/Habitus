@@ -36,7 +36,10 @@
             lon = position.coords.longitude;
             console.log(lat, lon);
 
-            const mymap = L.map('mymap').setView([lat, lon], 17);
+            const mymap = L.map('mymap',{
+                minZoom: 10,
+                maxZoom: 17
+            }).setView([lat, lon], 17);
             const attribution =
                 '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
             const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -48,7 +51,7 @@
             var marker = L.marker([lat, lon]).addTo(mymap);
 
             //pop up for the location
-            marker.bindPopup(`<b>This is users current location</b> latitutde:${lat} longitude:${lon}`).openPopup();
+            marker.bindPopup(`<b>This is users current location</b> latitutde:${lat.toFixed(5)} longitude:${lon.toFixed(5)}`).openPopup();
 
             //add map scale
             L.control.scale({ position: 'bottomright' }).addTo(mymap);
@@ -56,7 +59,7 @@
             //map coordinate display
             mymap.on('mousemove', function (e) {
                 console.log(e)
-                $('.coordinate').html(`LAT:${e.latlng.lat} LNG:${e.latlng.lng}`)
+                $('.coordinate').html(`LAT:${e.latlng.lat.toFixed(5)} LNG:${e.latlng.lng.toFixed(5)}`)
             })
 
             //leaflet measure
