@@ -69,8 +69,14 @@ if ("geolocation" in navigator) {
     // //leaflet measure
     L.control.measure({
       primaryAreaUnit: 'sqmeters',
-      primaryLengthUnit: 'meters'
+      primaryLengthUnit: 'meters',
+      activeColor : "#3D535D",
+      captureZIndex: 10000
     }).addTo(mymap);
+    mymap.on('measurefinish',function(e){
+        console.log(e)
+    });
+
 
     // //search buTton
     // L.Control.geocoder().addTo(mymap);
@@ -79,6 +85,7 @@ if ("geolocation" in navigator) {
     var c = new L.Control.Coordinates();
     c.addTo(mymap);
     mymap.on('click', function (e) {
+        console.log(e)
       c.setCoordinates(e);
     });
     // //leaflet-geoman toolbar
