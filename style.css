@@ -1,4 +1,19 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body,
 #mymap {
-    height: 98vh;
-    width: 98vw;
-  }
+  height: 100%;
+  width: 100vw;
+}
+
+.leaflet-control-measure {
+  cursor: pointer;
+
+}
+.leaflet-control-measure .leaflet-control-measure-toggle{
+  float: left !important;
+}
