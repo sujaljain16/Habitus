@@ -12,11 +12,14 @@ const mymap = L.map("mymap", {
   minZoom: 0,   //setting zoom levels
   maxZoom: 18
 }).fitWorld();
-const attribution =
-  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+// const attribution =
+//   '&copy; <a href="https://www.openstreetmap.org/copyright">habitus</a>';
 const tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-const tiles = L.tileLayer(tileUrl, { attribution });
+const tiles = L.tileLayer(tileUrl);
 tiles.addTo(mymap);
+// L.easyButton('<img src="/lib/assets/location.svg" style="width:16px">', function(btn, map){
+//     helloPopup.setLatLng(mymap.getCenter()).openOn(mymap);
+// }).addTo(mymap);
 mymap.locate({ setView: true, maxZoom: 16 });
 function onLocationFound(e) {
   L.marker(e.latlng).addTo(mymap)

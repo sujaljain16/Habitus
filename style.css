@@ -17,3 +17,17 @@ body,
 .leaflet-control-measure .leaflet-control-measure-toggle{
   float: left !important;
 }
+
+.fa-location-crosshairs {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px;
+  z-index: 400;
+  
+}
+
+.fa-location-crosshair:hover{
+    opacity: 0.8;
+    cursor: pointer;
+}
